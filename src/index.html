@@ -6,8 +6,34 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <div class="ctx">
+      <span class="label">Utilisation CPU (<span class="span_cpu"></span>%)</span>
+      <canvas id="myChart"></canvas>
+    </div>
+    <div>
+      <div class="box">
+        <span class="label">Mem (%)</span>
+        <span id="mem">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Mem totale (GB)</span>
+        <span id="total-mem">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Mem libre (GB)</span>
+        <span id="free-mem">-</span>
+      </div>
+    </div>
+    <div id="notification" class="hidden">
+      <p id="message"></p>
+      <button id="close-button" onClick="closeNotification()">
+        Close
+      </button>
+      <button id="restart-button" onClick="restartApp()" class="hidden">
+        Restart
+      </button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

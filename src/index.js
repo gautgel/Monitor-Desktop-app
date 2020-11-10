@@ -1,13 +1,8 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const os = require('os-utils');
 
-require('update-electron-app')({
-  repo: '',
-  updateInterval: '5 minutes',
-  logger: require('electron-log')
-});
-
+const { autoUpdater } = require('electron-updater');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -19,11 +14,11 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    // icon: __dirname + '/icon/monitor-icon.png';
     webPreferences: {
       nodeIntegration: true
     }
   });
-
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
@@ -35,8 +30,13 @@ const createWindow = () => {
       mainWindow.webContents.send('cpu',v*100);
       mainWindow.webContents.send('mem',os.freememPercentage()*100);
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
+      mainWindow.webContents.send('free-mem',os.freemem()/1024);
     });
   },1000);
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 };
 
 // This method will be called when Electron has finished
@@ -63,3 +63,13 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
+});
