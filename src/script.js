@@ -60,37 +60,47 @@ ipcRenderer.on('cpu',(event,data) => {
     document.querySelector('.span_cpu').innerHTML = data.toFixed(2);
     cpuValues.push(data.toFixed(2));
     labels.push (i++);
-  
+
     if ( labels.length >= 20 ) {
-      labels = labels.slice(Math.max(labels.length - 20, 1))
-      myChart.data.labels = labels;
+        labels = labels.slice(Math.max(labels.length - 20, 1))
+        myChart.data.labels = labels;
     }
-  
+
     if ( cpuValues.length >= 20 ) {
-      cpuValues = cpuValues.slice(Math.max(labels.length - 20, 1))
-      myChart.data.datasets[0].data = cpuValues
+        cpuValues = cpuValues.slice(Math.max(labels.length - 20, 1))
+        myChart.data.datasets[0].data = cpuValues
     }
-  
+
     myChart.update();
 });
 
 const notification = document.getElementById('notification');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
+const closeButton = document.getElementById('close-button');
+
 ipcRenderer.on('update_available', () => {
-  ipcRenderer.removeAllListeners('update_available');
-  message.innerText = 'A new update is available. Downloading now...';
-  notification.classList.remove('hidden');
+    ipcRenderer.removeAllListeners('update_available');
+    message.innerText = 'A new update is available. Downloading now...';
+    notification.classList.remove('hidden');
 });
 ipcRenderer.on('update_downloaded', () => {
-  ipcRenderer.removeAllListeners('update_downloaded');
-  message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
-  restartButton.classList.remove('hidden');
-  notification.classList.remove('hidden');
+    ipcRenderer.removeAllListeners('update_downloaded');
+    message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+    restartButton.classList.remove('hidden');
+    notification.classList.remove('hidden');
 });
+
 function closeNotification() {
-  notification.classList.add('hidden');
+    notification.classList.add('hidden');
 }
 function restartApp() {
-  ipcRenderer.send('restart_app');
+    ipcRenderer.send('restart_app');
 }
+
+restartButton.addEventListener("click", ()=>{
+    restartApp();
+});
+closeButton.addEventListener("click", ()=>{
+    closeNotification();
+})

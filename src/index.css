@@ -10,30 +10,41 @@ body {
   overflow: hidden;
   background: #222;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   color: white;
+  overflow-y: auto;
 }
 .box {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 100px;
+  font-size: 60px;
   line-height: 0.95;
-  padding: 30px;
+  background: rgb(22, 22, 22);
+  border-radius: 5px;
+  padding: 60px;
 }
 .label {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
-  color:#efa;
+  color:white;
 }
 
 .ctx{
   position: relative;
-  width: 80%;
-  height: 50%;
+  width: 85%;
+  height: 50%;   
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(22, 22, 22);
+  border-radius: 5px;
+  padding: 33px;
+  margin-top: 5px;
 }
 
 #myChart{
@@ -53,4 +64,11 @@ body {
 }
 .hidden {
   display: none;
+}
+.containerBox{
+  position: relative;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

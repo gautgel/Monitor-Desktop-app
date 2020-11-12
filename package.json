@@ -1,18 +1,18 @@
 {
   "name": "monitor",
   "productName": "monitor",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.0.1",
+  "description": "My first electron app with monitoring system",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "build": "electron-builder build --mac --win --publish never",
+    "deploy": "electron-builder build --mac --win --publish always"
   },
-  "build": "electron-builder build --mac --win --publish never",
-  "deploy": "electron-builder build --mac --win --publish always",
   "repository": {
     "type": "git",
     "url": "https://github.com/gautgel/Monitor-Desktop-app.git"

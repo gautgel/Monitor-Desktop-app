@@ -10,7 +10,7 @@
       <span class="label">Utilisation CPU (<span class="span_cpu"></span>%)</span>
       <canvas id="myChart"></canvas>
     </div>
-    <div>
+    <div class="containerBox">
       <div class="box">
         <span class="label">Mem (%)</span>
         <span id="mem">-</span>
@@ -26,14 +26,24 @@
     </div>
     <div id="notification" class="hidden">
       <p id="message"></p>
-      <button id="close-button" onClick="closeNotification()">
+      <button id="close-button">
         Close
       </button>
-      <button id="restart-button" onClick="restartApp()" class="hidden">
+      <button id="restart-button" class="hidden">
         Restart
       </button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="script.js"></script>
+    <script>
+      const { ipcRenderer } = require('electron');
+
+      function closeNotification() {
+        notification.classList.add('hidden');
+      }
+      function restartApp() {
+        ipcRenderer.send('restart_app');
+      }
+    </script>
   </body>
 </html>
